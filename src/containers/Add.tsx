@@ -1,0 +1,79 @@
+import React, {useEffect, useState} from "react";
+import {Link, useNavigate} from "react-router-dom";
+import {TodoItem} from "../types/TodoItem";
+import { v4 } from 'uuid';
+import {
+    AppBar,
+    Box, Divider, Drawer, Fab,
+    IconButton, List, ListItem, ListItemIcon, ListItemText,
+    Table,
+    TableBody,
+    TableCell,
+    TableContainer,
+    TableRow, TextField,
+    Toolbar,
+    Typography
+} from "@mui/material";
+import {ArrowBack, BarChart, ChevronLeft, Done, Edit, FormatListBulleted} from "@mui/icons-material";
+
+const Add = () => {
+
+    const [todoItemList, setTodoItemList] = useState(Array<TodoItem>())
+    const [title, setTitle] = useState<string>("")
+    const [description, setDescription] = useState<string>("")
+
+    const navigate = useNavigate()
+
+    useEffect(() => {
+        if (localStorage.todoItemListData) {
+            const data = JSON.parse(localStorage.todoItemListData) as Array<TodoItem>
+            setTodoItemList(data)
+        }
+    }, [])
+
+    const handleTitleTextBoxChanged = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setTitle(e.target.value)
+    }
+
+    const handleDescriptionTextBoxChanged = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setDescription(e.target.value)
+    }
+
+    const handleAddClicked = () => {
+        const item: TodoItem = {
+            id: v4(),
+            title: title,
+            description: description,
+            isComplete: false,
+        }
+        const data: Array<TodoItem> = [...todoItemList, item]
+        localStorage.setItem("todoItemListData", JSON.stringify(data))
+        navigate("/")
+    }
+
+    return (
+        <Box>
+            <AppBar position="static">
+                <Toolbar>
+                    <IconButton edge="start" color="inherit" onClick={() => navigate("/")}>
+                        <ArrowBack />
+                    </IconButton>
+                    <Typography variant="h6" sx={{flexGrow: 1}}>New To-Do</Typography>
+                </Toolbar>
+            </AppBar>
+            <Box sx={{ margin: "0 auto", maxWidth: "700px" }}>
+                <Box display="flex" flexDirection="column">
+                    <TextField label="Title" onChange={handleTitleTextBoxChanged} sx={{ margin: "10px", maxWidth: "300px" }}/>
+                    <TextField label="Description" onChange={handleDescriptionTextBoxChanged} sx={{ margin: "10px", maxWidth: "300px" }} />
+                </Box>
+                <Box display="flex" justifyContent="flex-end" sx={{ margin: "10px" }}>
+                    <Fab color="primary" onClick={handleAddClicked}>
+                        <Done />
+                    </Fab>
+                </Box>
+            </Box>
+        </Box>
+    )
+}
+
+export default Add
