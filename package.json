@@ -30,6 +30,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
+  "homepage": "https://uesyuu.github.io/todo_list",
   "eslintConfig": {
     "extends": [
       "react-app",
