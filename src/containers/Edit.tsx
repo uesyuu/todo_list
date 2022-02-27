@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {Link, useNavigate, useParams} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import {TodoItem} from "../types/TodoItem";
 import {AppBar, Box, Fab, IconButton, TextField, Toolbar, Typography} from "@mui/material";
 import {ArrowBack, Done} from "@mui/icons-material";
@@ -51,19 +51,21 @@ const Edit = () => {
             <AppBar position="static">
                 <Toolbar>
                     <IconButton edge="start" color="inherit" onClick={() => navigate(`/detail/${params.id}`)}>
-                        <ArrowBack />
+                        <ArrowBack/>
                     </IconButton>
                     <Typography variant="h6" sx={{flexGrow: 1}}>Edit To-Do</Typography>
                 </Toolbar>
             </AppBar>
-            <Box sx={{ margin: "0 auto", maxWidth: "700px" }}>
+            <Box sx={{margin: "0 auto", maxWidth: "700px"}}>
                 <Box display="flex" flexDirection="column">
-                    <TextField label="Title" value={title} onChange={handleTitleTextBoxChanged} sx={{ margin: "10px", maxWidth: "300px" }}/>
-                    <TextField label="Description" value={description} onChange={handleDescriptionTextBoxChanged} sx={{ margin: "10px", maxWidth: "300px" }} />
+                    <TextField label="Title" value={title} onChange={handleTitleTextBoxChanged}
+                               sx={{margin: "10px", maxWidth: "300px"}}/>
+                    <TextField label="Description" value={description} onChange={handleDescriptionTextBoxChanged}
+                               sx={{margin: "10px", maxWidth: "300px"}}/>
                 </Box>
-                <Box display="flex" justifyContent="flex-end" sx={{ margin: "10px" }}>
+                <Box display="flex" justifyContent="flex-end" sx={{margin: "10px"}}>
                     <Fab color="primary" onClick={handleEditClick}>
-                        <Done />
+                        <Done/>
                     </Fab>
                 </Box>
             </Box>

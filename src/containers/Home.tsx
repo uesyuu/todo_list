@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {Link, useNavigate} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import {TodoItem} from "../types/TodoItem";
 import {
     AppBar,
@@ -9,8 +9,13 @@ import {
     Dialog,
     DialogActions,
     DialogContent,
-    DialogContentText, Divider, Drawer, Fab,
-    IconButton, List, ListItem,
+    DialogContentText,
+    Divider,
+    Drawer,
+    Fab,
+    IconButton,
+    List,
+    ListItem,
     ListItemIcon,
     ListItemText,
     Menu,
@@ -24,15 +29,13 @@ import {
     Typography
 } from "@mui/material";
 import {
-    Add, BarChart,
-    Check,
+    Add,
+    BarChart,
     ChevronLeft,
     Delete,
-    Edit,
     FilterList,
     FormatListBulleted,
-    Menu as MenuIcon,
-    Sort
+    Menu as MenuIcon
 } from "@mui/icons-material";
 
 const Home = () => {
@@ -153,7 +156,7 @@ const Home = () => {
                         color="inherit"
                         onClick={handleSortClick}
                     >
-                        <FilterList />
+                        <FilterList/>
                     </IconButton>
                     <IconButton
                         color="inherit"
@@ -206,26 +209,26 @@ const Home = () => {
                 </Toolbar>
             </AppBar>
             <Drawer open={openDrawer} onClose={handleDrawerClose}>
-                <IconButton onClick={handleDrawerClose} sx={{ display: "flex", justifyContent: "flex-end" }}>
-                    <ChevronLeft />
+                <IconButton onClick={handleDrawerClose} sx={{display: "flex", justifyContent: "flex-end"}}>
+                    <ChevronLeft/>
                 </IconButton>
-                <Divider />
+                <Divider/>
                 <List>
                     <ListItem>
                         <ListItemIcon>
-                            <FormatListBulleted />
+                            <FormatListBulleted/>
                         </ListItemIcon>
-                        <ListItemText primary="To-Do List" />
+                        <ListItemText primary="To-Do List"/>
                     </ListItem>
                     <ListItem onClick={() => navigate("/stats")}>
                         <ListItemIcon>
-                            <BarChart />
+                            <BarChart/>
                         </ListItemIcon>
-                        <ListItemText primary="Statistics" />
+                        <ListItemText primary="Statistics"/>
                     </ListItem>
                 </List>
             </Drawer>
-            <Box sx={{ margin: "0 auto", maxWidth: "700px" }}>
+            <Box sx={{margin: "0 auto", maxWidth: "700px"}}>
                 <TableContainer>
                     <Table>
                         <TableBody>
@@ -244,9 +247,9 @@ const Home = () => {
                         </TableBody>
                     </Table>
                 </TableContainer>
-                <Box display="flex" justifyContent="flex-end" sx={{ margin: "10px" }}>
+                <Box display="flex" justifyContent="flex-end" sx={{margin: "10px"}}>
                     <Fab color="primary" onClick={() => navigate("/add")}>
-                        <Add />
+                        <Add/>
                     </Fab>
                 </Box>
             </Box>

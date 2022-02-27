@@ -1,20 +1,9 @@
 import React, {useEffect, useState} from "react";
-import {Link, useNavigate} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import {TodoItem} from "../types/TodoItem";
-import { v4 } from 'uuid';
-import {
-    AppBar,
-    Box, Divider, Drawer, Fab,
-    IconButton, List, ListItem, ListItemIcon, ListItemText,
-    Table,
-    TableBody,
-    TableCell,
-    TableContainer,
-    TableRow, TextField,
-    Toolbar,
-    Typography
-} from "@mui/material";
-import {ArrowBack, BarChart, ChevronLeft, Done, Edit, FormatListBulleted} from "@mui/icons-material";
+import {v4} from 'uuid';
+import {AppBar, Box, Fab, IconButton, TextField, Toolbar, Typography} from "@mui/material";
+import {ArrowBack, Done} from "@mui/icons-material";
 
 const Add = () => {
 
@@ -56,19 +45,21 @@ const Add = () => {
             <AppBar position="static">
                 <Toolbar>
                     <IconButton edge="start" color="inherit" onClick={() => navigate("/")}>
-                        <ArrowBack />
+                        <ArrowBack/>
                     </IconButton>
                     <Typography variant="h6" sx={{flexGrow: 1}}>New To-Do</Typography>
                 </Toolbar>
             </AppBar>
-            <Box sx={{ margin: "0 auto", maxWidth: "700px" }}>
+            <Box sx={{margin: "0 auto", maxWidth: "700px"}}>
                 <Box display="flex" flexDirection="column">
-                    <TextField label="Title" onChange={handleTitleTextBoxChanged} sx={{ margin: "10px", maxWidth: "300px" }}/>
-                    <TextField label="Description" onChange={handleDescriptionTextBoxChanged} sx={{ margin: "10px", maxWidth: "300px" }} />
+                    <TextField label="Title" onChange={handleTitleTextBoxChanged}
+                               sx={{margin: "10px", maxWidth: "300px"}}/>
+                    <TextField label="Description" onChange={handleDescriptionTextBoxChanged}
+                               sx={{margin: "10px", maxWidth: "300px"}}/>
                 </Box>
-                <Box display="flex" justifyContent="flex-end" sx={{ margin: "10px" }}>
+                <Box display="flex" justifyContent="flex-end" sx={{margin: "10px"}}>
                     <Fab color="primary" onClick={handleAddClicked}>
-                        <Done />
+                        <Done/>
                     </Fab>
                 </Box>
             </Box>

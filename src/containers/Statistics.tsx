@@ -7,11 +7,12 @@ import {
     IconButton,
     List,
     ListItem,
-    ListItemIcon, ListItemText,
+    ListItemIcon,
+    ListItemText,
     Toolbar,
     Typography
 } from "@mui/material";
-import {ArrowBack, BarChart, ChevronLeft, FormatListBulleted, Menu as MenuIcon} from "@mui/icons-material";
+import {BarChart, ChevronLeft, FormatListBulleted, Menu as MenuIcon} from "@mui/icons-material";
 import {TodoItem} from "../types/TodoItem";
 import {useNavigate} from "react-router-dom";
 
@@ -48,28 +49,30 @@ const Statistics = () => {
                 </Toolbar>
             </AppBar>
             <Drawer open={openDrawer} onClose={handleDrawerClose}>
-                <IconButton onClick={handleDrawerClose} sx={{ display: "flex", justifyContent: "flex-end" }}>
-                    <ChevronLeft />
+                <IconButton onClick={handleDrawerClose} sx={{display: "flex", justifyContent: "flex-end"}}>
+                    <ChevronLeft/>
                 </IconButton>
-                <Divider />
+                <Divider/>
                 <List>
                     <ListItem onClick={() => navigate("/")}>
                         <ListItemIcon>
-                            <FormatListBulleted />
+                            <FormatListBulleted/>
                         </ListItemIcon>
-                        <ListItemText primary="To-Do List" />
+                        <ListItemText primary="To-Do List"/>
                     </ListItem>
                     <ListItem>
                         <ListItemIcon>
-                            <BarChart />
+                            <BarChart/>
                         </ListItemIcon>
-                        <ListItemText primary="Statistics" />
+                        <ListItemText primary="Statistics"/>
                     </ListItem>
                 </List>
             </Drawer>
-            <Box display="flex" flexDirection="column" sx={{ margin: "0 auto", maxWidth: "700px" }}>
-                <Typography variant="body1">Active tasks: {todoItemList.filter((item) => !item.isComplete).length}</Typography>
-                <Typography variant="body1">Completed tasks: {todoItemList.filter((item) => item.isComplete).length}</Typography>
+            <Box display="flex" flexDirection="column" sx={{margin: "0 auto", maxWidth: "700px"}}>
+                <Typography variant="body1">Active
+                    tasks: {todoItemList.filter((item) => !item.isComplete).length}</Typography>
+                <Typography variant="body1">Completed
+                    tasks: {todoItemList.filter((item) => item.isComplete).length}</Typography>
             </Box>
         </Box>
     )

@@ -3,8 +3,13 @@ import {useNavigate, useParams} from "react-router-dom";
 import {TodoItem} from "../types/TodoItem";
 import {
     AppBar,
-    Box, Button,
-    Checkbox, Dialog, DialogActions, DialogContent, DialogContentText,
+    Box,
+    Button,
+    Checkbox,
+    Dialog,
+    DialogActions,
+    DialogContent,
+    DialogContentText,
     Fab,
     IconButton,
     Table,
@@ -102,7 +107,7 @@ const Detail = () => {
                     </Dialog>
                 </Toolbar>
             </AppBar>
-            <Box sx={{ margin: "0 auto", maxWidth: "700px" }}>
+            <Box sx={{margin: "0 auto", maxWidth: "700px"}}>
                 <TableContainer>
                     <Table>
                         <TableBody>
@@ -123,9 +128,9 @@ const Detail = () => {
                         </TableBody>
                     </Table>
                 </TableContainer>
-                <Box display="flex" justifyContent="flex-end" sx={{ margin: "10px" }}>
+                <Box display="flex" justifyContent="flex-end" sx={{margin: "10px"}}>
                     <Fab color="primary" onClick={handleEditClick}>
-                        <Edit />
+                        <Edit/>
                     </Fab>
                 </Box>
             </Box>
