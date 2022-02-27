@@ -7,7 +7,6 @@ import {ArrowBack, Done} from "@mui/icons-material";
 const Edit = () => {
 
     const [todoItemList, setTodoItemList] = useState(Array<TodoItem>())
-    const [todoItem, setTodoItem] = useState<TodoItem>()
     const [title, setTitle] = useState<string>("")
     const [description, setDescription] = useState<string>("")
 
@@ -19,21 +18,20 @@ const Edit = () => {
             const data = JSON.parse(localStorage.todoItemListData) as Array<TodoItem>
             setTodoItemList(data)
             const item = data.find((item) => item.id === params.id)
-            setTodoItem(item)
             setTitle(item ? item?.title : "")
             setDescription(item ? item?.description : "")
         }
     }, [])
 
-    const handleTitleTextBoxChanged = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleTitleTextBoxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setTitle(e.target.value)
     }
 
-    const handleDescriptionTextBoxChanged = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleDescriptionTextBoxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setDescription(e.target.value)
     }
 
-    const handleEditClick = () => {
+    const handleEditSubmitClick = () => {
         const itemIndex = todoItemList.findIndex((item) => item.id === params.id)
         const data = todoItemList.slice()
         data[itemIndex] = {
@@ -58,13 +56,13 @@ const Edit = () => {
             </AppBar>
             <Box sx={{margin: "0 auto", maxWidth: "700px"}}>
                 <Box display="flex" flexDirection="column">
-                    <TextField label="Title" value={title} onChange={handleTitleTextBoxChanged}
+                    <TextField label="Title" value={title} onChange={handleTitleTextBoxChange}
                                sx={{margin: "10px", maxWidth: "300px"}}/>
-                    <TextField label="Description" value={description} onChange={handleDescriptionTextBoxChanged}
+                    <TextField label="Description" value={description} onChange={handleDescriptionTextBoxChange}
                                sx={{margin: "10px", maxWidth: "300px"}}/>
                 </Box>
                 <Box display="flex" justifyContent="flex-end" sx={{margin: "10px"}}>
-                    <Fab color="primary" onClick={handleEditClick}>
+                    <Fab color="primary" onClick={handleEditSubmitClick}>
                         <Done/>
                     </Fab>
                 </Box>

@@ -39,13 +39,12 @@ import {
 } from "@mui/icons-material";
 
 const Home = () => {
-    // TODO 変数名、関数名を見直し
 
     const [todoItemList, setTodoItemList] = useState(Array<TodoItem>())
     const [filteredTodoItemList, setFilteredTodoItemList] = useState(Array<TodoItem>())
     const [filter, setFilter] = useState<Filter>("all")
     const [anchorElement, setAnchorElement] = useState<Element | null>(null)
-    const [openClearAllDialog, setOpenClearAllDialog] = useState<boolean>(false)
+    const [openDeleteAllDialog, setOpenDeleteAllDialog] = useState<boolean>(false)
     const [openDrawer, setOpenDrawer] = useState<boolean>(false)
 
     type Filter = "all" | "active" | "completed"
@@ -59,20 +58,6 @@ const Home = () => {
             setFilteredList(filter, data)
         }
     }, [])
-
-    const handleCheckBoxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const itemIndex = todoItemList.findIndex((item) => item.id === e.target.value)
-        const data = todoItemList.slice()
-        data[itemIndex] = {
-            id: data[itemIndex].id,
-            title: data[itemIndex].title,
-            description: data[itemIndex].description,
-            isComplete: e.target.checked
-        }
-        localStorage.setItem("todoItemListData", JSON.stringify(data))
-        setTodoItemList(data)
-        setFilteredList(filter, data)
-    }
 
     const setFilteredList = (filter: Filter, todoItemList: Array<TodoItem>) => {
         let list = Array<TodoItem>()
@@ -93,46 +78,60 @@ const Home = () => {
         setFilteredTodoItemList(list)
     }
 
-    const handleFilterAllClick = () => {
+    const handleCheckBoxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const itemIndex = todoItemList.findIndex((item) => item.id === e.target.value)
+        const data = todoItemList.slice()
+        data[itemIndex] = {
+            id: data[itemIndex].id,
+            title: data[itemIndex].title,
+            description: data[itemIndex].description,
+            isComplete: e.target.checked
+        }
+        localStorage.setItem("todoItemListData", JSON.stringify(data))
+        setTodoItemList(data)
+        setFilteredList(filter, data)
+    }
+
+    const handleFilterMenuAllClick = () => {
         setFilter("all")
         setFilteredList("all", todoItemList)
-        handleCloseSortMenu()
+        handleFilterMenuClose()
     }
 
-    const handleFilterActiveClick = () => {
+    const handleFilterMenuActiveClick = () => {
         setFilter("active")
         setFilteredList("active", todoItemList)
-        handleCloseSortMenu()
+        handleFilterMenuClose()
     }
 
-    const handleFilterCompletedClick = () => {
+    const handleFilterMenuCompletedClick = () => {
         setFilter("completed")
         setFilteredList("completed", todoItemList)
-        handleCloseSortMenu()
+        handleFilterMenuClose()
     }
 
-    const handleSortClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    const handleFilterButtonClick = (e: React.MouseEvent<HTMLButtonElement>) => {
         setAnchorElement(e.currentTarget)
     }
 
-    const handleCloseSortMenu = () => {
+    const handleFilterMenuClose = () => {
         setAnchorElement(null)
     }
 
-    const handleClearAllClick = () => {
-        setOpenClearAllDialog(true)
+    const handleDeleteAllButtonClick = () => {
+        setOpenDeleteAllDialog(true)
     }
 
-    const handleClearAllDialogClose = () => {
-        setOpenClearAllDialog(false)
+    const handleDeleteAllDialogClose = () => {
+        setOpenDeleteAllDialog(false)
     }
 
-    const handleDoClearAllClick = () => {
+    const handleDeleteAllDialogAcceptClick = () => {
         const data = Array<TodoItem>()
         localStorage.setItem("todoItemListData", JSON.stringify(data))
         setTodoItemList(data)
         setFilteredList(filter, data)
-        handleClearAllDialogClose()
+        handleDeleteAllDialogClose()
     }
 
     const handleDrawerOpen = () => {
@@ -154,22 +153,22 @@ const Home = () => {
                     <Typography variant="h6" sx={{flexGrow: 1}}>To-Do List</Typography>
                     <IconButton
                         color="inherit"
-                        onClick={handleSortClick}
+                        onClick={handleFilterButtonClick}
                     >
                         <FilterList/>
                     </IconButton>
                     <IconButton
                         color="inherit"
-                        onClick={handleClearAllClick}
+                        onClick={handleDeleteAllButtonClick}
                     >
                         <Delete/>
                     </IconButton>
                     <Menu
                         anchorEl={anchorElement}
                         open={Boolean(anchorElement)}
-                        onClose={handleCloseSortMenu}
+                        onClose={handleFilterMenuClose}
                     >
-                        <MenuItem onClick={handleFilterAllClick}>
+                        <MenuItem onClick={handleFilterMenuAllClick}>
                             {/*<ListItemIcon sx={{visibility: "hidden"}}>*/}
                             {/*    <Check/>*/}
                             {/*</ListItemIcon>*/}
@@ -177,7 +176,7 @@ const Home = () => {
                                 All
                             </ListItemText>
                         </MenuItem>
-                        <MenuItem onClick={handleFilterActiveClick}>
+                        <MenuItem onClick={handleFilterMenuActiveClick}>
                             {/*<ListItemIcon sx={{visibility: "hidden"}}>*/}
                             {/*    <Check/>*/}
                             {/*</ListItemIcon>*/}
@@ -185,25 +184,25 @@ const Home = () => {
                                 Active
                             </ListItemText>
                         </MenuItem>
-                        <MenuItem onClick={handleFilterCompletedClick}>
+                        <MenuItem onClick={handleFilterMenuCompletedClick}>
                             {/*<ListItemIcon sx={{visibility: "hidden"}}>*/}
                             {/*    <Check/>*/}
                             {/*</ListItemIcon>*/}
                             <ListItemText>
-                                Complete
+                                Completed
                             </ListItemText>
                         </MenuItem>
                     </Menu>
                     <Dialog
-                        open={openClearAllDialog}
-                        onClose={handleClearAllDialogClose}
+                        open={openDeleteAllDialog}
+                        onClose={handleDeleteAllDialogClose}
                     >
                         <DialogContent>
                             <DialogContentText>Clear all?</DialogContentText>
                         </DialogContent>
                         <DialogActions>
-                            <Button onClick={handleClearAllDialogClose}>Cancel</Button>
-                            <Button onClick={handleDoClearAllClick}>Clear</Button>
+                            <Button onClick={handleDeleteAllDialogClose}>Cancel</Button>
+                            <Button onClick={handleDeleteAllDialogAcceptClick}>Clear</Button>
                         </DialogActions>
                     </Dialog>
                 </Toolbar>
@@ -239,8 +238,12 @@ const Home = () => {
                                                   onChange={handleCheckBoxChange}/>
                                     </TableCell>
                                     <TableCell>
-                                        <Typography variant="body1"
-                                                    onClick={() => navigate(`/detail/${item.id}`)}>{item.title}</Typography>
+                                        <Typography
+                                            variant="body1"
+                                            onClick={() => navigate(`/detail/${item.id}`)}
+                                        >
+                                            {item.title}
+                                        </Typography>
                                     </TableCell>
                                 </TableRow>
                             )}

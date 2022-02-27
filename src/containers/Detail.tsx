@@ -47,13 +47,13 @@ const Detail = () => {
         }
     }, [])
 
-    const handleDeleteDialogDeleteClick = () => {
+    const handleDeleteDialogAcceptClick = () => {
         const data = todoItemList.filter((item) => item.id != params.id)
         localStorage.setItem("todoItemListData", JSON.stringify(data))
         navigate("/")
     }
 
-    const handleEditClick = () => {
+    const handleEditButtonClick = () => {
         navigate(`/edit/${params.id}`)
     }
 
@@ -102,7 +102,7 @@ const Detail = () => {
                         </DialogContent>
                         <DialogActions>
                             <Button onClick={handleDeleteDialogClose}>Cancel</Button>
-                            <Button onClick={handleDeleteDialogDeleteClick}>Delete</Button>
+                            <Button onClick={handleDeleteDialogAcceptClick}>Delete</Button>
                         </DialogActions>
                     </Dialog>
                 </Toolbar>
@@ -129,7 +129,7 @@ const Detail = () => {
                     </Table>
                 </TableContainer>
                 <Box display="flex" justifyContent="flex-end" sx={{margin: "10px"}}>
-                    <Fab color="primary" onClick={handleEditClick}>
+                    <Fab color="primary" onClick={handleEditButtonClick}>
                         <Edit/>
                     </Fab>
                 </Box>

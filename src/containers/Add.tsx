@@ -20,15 +20,15 @@ const Add = () => {
         }
     }, [])
 
-    const handleTitleTextBoxChanged = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleTitleTextBoxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setTitle(e.target.value)
     }
 
-    const handleDescriptionTextBoxChanged = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleDescriptionTextBoxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setDescription(e.target.value)
     }
 
-    const handleAddClicked = () => {
+    const handleAddSubmitClick = () => {
         const item: TodoItem = {
             id: v4(),
             title: title,
@@ -52,13 +52,13 @@ const Add = () => {
             </AppBar>
             <Box sx={{margin: "0 auto", maxWidth: "700px"}}>
                 <Box display="flex" flexDirection="column">
-                    <TextField label="Title" onChange={handleTitleTextBoxChanged}
+                    <TextField label="Title" onChange={handleTitleTextBoxChange}
                                sx={{margin: "10px", maxWidth: "300px"}}/>
-                    <TextField label="Description" onChange={handleDescriptionTextBoxChanged}
+                    <TextField label="Description" onChange={handleDescriptionTextBoxChange}
                                sx={{margin: "10px", maxWidth: "300px"}}/>
                 </Box>
                 <Box display="flex" justifyContent="flex-end" sx={{margin: "10px"}}>
-                    <Fab color="primary" onClick={handleAddClicked}>
+                    <Fab color="primary" onClick={handleAddSubmitClick}>
                         <Done/>
                     </Fab>
                 </Box>

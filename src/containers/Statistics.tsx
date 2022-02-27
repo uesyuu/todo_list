@@ -69,10 +69,12 @@ const Statistics = () => {
                 </List>
             </Drawer>
             <Box display="flex" flexDirection="column" sx={{margin: "0 auto", maxWidth: "700px"}}>
-                <Typography variant="body1">Active
-                    tasks: {todoItemList.filter((item) => !item.isComplete).length}</Typography>
-                <Typography variant="body1">Completed
-                    tasks: {todoItemList.filter((item) => item.isComplete).length}</Typography>
+                <Typography variant="body1">
+                    Active tasks: {todoItemList.filter((item) => !item.isComplete).length}
+                </Typography>
+                <Typography variant="body1">
+                    Completed tasks: {todoItemList.filter((item) => item.isComplete).length}
+                </Typography>
             </Box>
         </Box>
     )
