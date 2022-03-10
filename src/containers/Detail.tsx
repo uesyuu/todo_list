@@ -59,14 +59,14 @@ const Detail = () => {
 
     const handleCheckBoxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setTodoItem({...todoItem, isComplete: e.target.checked})
-        const itemIndex = todoItemList.findIndex((item) => item.id === todoItem.id)
-        const data = todoItemList.slice()
-        data[itemIndex] = {
-            id: data[itemIndex].id,
-            title: data[itemIndex].title,
-            description: data[itemIndex].description,
-            isComplete: e.target.checked
-        }
+        const data = todoItemList.map((item) => (
+            {
+                id: item.id,
+                title: item.title,
+                description: item.description,
+                isComplete: item.id === todoItem.id ? e.target.checked : item.isComplete
+            }
+        ))
         localStorage.setItem("todoItemListData", JSON.stringify(data))
         setTodoItemList(data)
     }

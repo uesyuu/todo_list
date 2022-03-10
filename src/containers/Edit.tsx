@@ -32,14 +32,14 @@ const Edit = () => {
     }
 
     const handleEditSubmitClick = () => {
-        const itemIndex = todoItemList.findIndex((item) => item.id === params.id)
-        const data = todoItemList.slice()
-        data[itemIndex] = {
-            id: data[itemIndex].id,
-            title: title,
-            description: description,
-            isComplete: data[itemIndex].isComplete
-        }
+        const data = todoItemList.map((item) => (
+            {
+                id: item.id,
+                title: item.id === params.id ? title : item.title,
+                description: item.id === params.id ? description : item.description,
+                isComplete: item.isComplete
+            }
+        ))
         localStorage.setItem("todoItemListData", JSON.stringify(data))
         navigate(`/detail/${params.id}`)
     }

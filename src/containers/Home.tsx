@@ -41,7 +41,6 @@ import {
 const Home = () => {
 
     const [todoItemList, setTodoItemList] = useState(Array<TodoItem>())
-    const [filteredTodoItemList, setFilteredTodoItemList] = useState(Array<TodoItem>())
     const [filter, setFilter] = useState<Filter>("all")
     const [anchorElement, setAnchorElement] = useState<Element | null>(null)
     const [openDeleteAllDialog, setOpenDeleteAllDialog] = useState<boolean>(false)
@@ -55,58 +54,34 @@ const Home = () => {
         if (localStorage.todoItemListData) {
             const data = JSON.parse(localStorage.todoItemListData) as Array<TodoItem>
             setTodoItemList(data)
-            setFilteredList(filter, data)
         }
     }, [])
 
-    const setFilteredList = (filter: Filter, todoItemList: Array<TodoItem>) => {
-        let list = Array<TodoItem>()
-        switch (filter) {
-            case "all": {
-                list = todoItemList.slice()
-                break
-            }
-            case "active": {
-                list = todoItemList.filter((item) => !item.isComplete)
-                break
-            }
-            case "completed": {
-                list = todoItemList.filter((item) => item.isComplete)
-                break
-            }
-        }
-        setFilteredTodoItemList(list)
-    }
-
     const handleCheckBoxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const itemIndex = todoItemList.findIndex((item) => item.id === e.target.value)
-        const data = todoItemList.slice()
-        data[itemIndex] = {
-            id: data[itemIndex].id,
-            title: data[itemIndex].title,
-            description: data[itemIndex].description,
-            isComplete: e.target.checked
-        }
+        const data = todoItemList.map((item) => (
+            {
+                id: item.id,
+                title: item.title,
+                description: item.description,
+                isComplete: item.id === e.target.value ? e.target.checked : item.isComplete
+            }
+        ))
         localStorage.setItem("todoItemListData", JSON.stringify(data))
         setTodoItemList(data)
-        setFilteredList(filter, data)
     }
 
     const handleFilterMenuAllClick = () => {
         setFilter("all")
-        setFilteredList("all", todoItemList)
         handleFilterMenuClose()
     }
 
     const handleFilterMenuActiveClick = () => {
         setFilter("active")
-        setFilteredList("active", todoItemList)
         handleFilterMenuClose()
     }
 
     const handleFilterMenuCompletedClick = () => {
         setFilter("completed")
-        setFilteredList("completed", todoItemList)
         handleFilterMenuClose()
     }
 
@@ -130,7 +105,6 @@ const Home = () => {
         const data = Array<TodoItem>()
         localStorage.setItem("todoItemListData", JSON.stringify(data))
         setTodoItemList(data)
-        setFilteredList(filter, data)
         handleDeleteAllDialogClose()
     }
 
@@ -231,22 +205,26 @@ const Home = () => {
                 <TableContainer>
                     <Table>
                         <TableBody>
-                            {filteredTodoItemList.map((item: TodoItem, index: number) =>
-                                <TableRow key={index}>
-                                    <TableCell padding="checkbox">
-                                        <Checkbox value={item.id} checked={item.isComplete}
-                                                  onChange={handleCheckBoxChange}/>
-                                    </TableCell>
-                                    <TableCell>
-                                        <Typography
-                                            variant="body1"
-                                            onClick={() => navigate(`/detail/${item.id}`)}
-                                        >
-                                            {item.title}
-                                        </Typography>
-                                    </TableCell>
-                                </TableRow>
-                            )}
+                            {
+                                todoItemList.filter((item) => (
+                                    filter === "active" ? !item.isComplete : (filter === "completed" ? item.isComplete : true)
+                                )).map((item: TodoItem, index: number) =>
+                                    <TableRow key={index}>
+                                        <TableCell padding="checkbox">
+                                            <Checkbox value={item.id} checked={item.isComplete}
+                                                      onChange={handleCheckBoxChange}/>
+                                        </TableCell>
+                                        <TableCell>
+                                            <Typography
+                                                variant="body1"
+                                                onClick={() => navigate(`/detail/${item.id}`)}
+                                            >
+                                                {item.title}
+                                            </Typography>
+                                        </TableCell>
+                                    </TableRow>
+                                )
+                            }
                         </TableBody>
                     </Table>
                 </TableContainer>
